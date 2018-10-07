@@ -12,6 +12,12 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  tipo_usuario: {
+    type: String
+  },
+  pad_usuario: {
+    type: String
+  },
   hash: String,
   salt: String
 });
