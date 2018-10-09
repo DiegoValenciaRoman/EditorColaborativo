@@ -1,4 +1,4 @@
-<div class="navbar navbar-default">
+<!--<div class="navbar navbar-default">
   <div class="container">
     <div id="navbar-main">
       <ul class="nav navbar-nav">
@@ -15,3 +15,122 @@
 </div>
 
 <router-outlet></router-outlet>
+-->
+<div class="page-wrapper chiller-theme toggled">
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div id="toggle-sidebar">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="sidebar-brand">
+                    <a href="#">Icode-class</a>
+                </div>
+                <div class="sidebar-header">
+                    <div *ngIf="auth.isLoggedIn()" class="user-info">
+                        <span class="user-name">
+                            <strong>{{ auth.getUserDetails()?.name }}</strong>
+                        </span>
+
+                        <span class="user-role">rol usuario</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- sidebar-header  -->
+
+                <!-- sidebar-search  -->
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+
+                        <li class="sidebar-dropdown" *ngIf="!auth.isLoggedIn()">
+                            <a routerLink="/login">
+                                <i class="fa fa-tachometer-alt"></i>
+                                <span>Iniciar Sesion</span>
+                            </a>
+                        </li>
+
+
+                        <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
+                            <a routerLink="/profile">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>{{ auth.getUserDetails()?.name }}</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
+                            <a (click)="auth.logout()">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Salir</span>
+                            </a>
+                        </li>
+
+
+                      <!--  <li class="header-menu">
+                            <span>Extra</span>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-calendar"></i>
+                                <span>Calendar</span>
+                            </a>
+                        </li>-->
+
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+                <!-- <a href="#">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-pill badge-warning notification">3</span>
+                </a>
+                <a href="#">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">7</span>
+                </a>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="badge-sonar"></span>
+                </a>
+                <a href="#">
+                    <i class="fa fa-power-off"></i>
+                </a>-->
+            </div>
+        </nav>
+        <!-- sidebar-wrapper  -->
+        <main class="page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                      <ul class="nav navbar-nav">
+                        <li><a routerLink="/">Home</a></li>
+                      </ul>
+                      <ul class="nav navbar-nav navbar-right">
+                        <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Inicia sesion</a></li>
+                        <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">{{ auth.getUserDetails()?.name }}</a></li>
+                        <li *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Salir</a></li>
+                      </ul>
+                    </div>
+                    
+                    <router-outlet></router-outlet>
+
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        footer aqui
+                    </div>
+                </div>
+            </div>
+    </main>
+    <!-- page-content" -->
+    </div>

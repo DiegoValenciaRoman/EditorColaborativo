@@ -54,6 +54,7 @@ module.exports.register = function(req, res) {
 
   user.name = req.body.name;
   user.email = req.body.email;
+  user.tipo_usuario = 'alumno';
 
   user.setPassword(req.body.password);
 
