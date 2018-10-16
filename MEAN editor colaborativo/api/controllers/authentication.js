@@ -54,7 +54,11 @@ module.exports.register = function(req, res) {
 
   user.name = req.body.name;
   user.email = req.body.email;
-  user.tipo_usuario = 'alumno';
+  //perimos 0 solo permite entrar a sesiones
+  //permiso 1 permite al usuario crear sesiones, mas lo del permiso 0
+  //permiso 2 permite al usuario tener una carpeta y guardar archivos, mas lo de permiso 0
+  //permiso 3 permite al usuario hacer todo lo anterior
+  user.permiso_usuario = 0;
 
   user.setPassword(req.body.password);
 

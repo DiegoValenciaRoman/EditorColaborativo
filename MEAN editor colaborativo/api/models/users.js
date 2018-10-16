@@ -12,7 +12,7 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  tipo_usuario: {
+  permiso_usuario: {
     type: String
   },
   pad_usuario: {
