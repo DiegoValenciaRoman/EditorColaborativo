@@ -65,6 +65,20 @@
                         </li>
 
                         <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
+                            <a routerLink="/miPad">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>miPad</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
+                            <a routerLink="/sesiones">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>sesiones</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
                             <a (click)="auth.logout()">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Salir</span>
@@ -115,11 +129,12 @@
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
                         <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Inicia sesion</a></li>
+                        <li *ngIf="auth.isLoggedIn()"><a routerLink="/mipad">mi pad</a></li>
                         <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">{{ auth.getUserDetails()?.name }}</a></li>
                         <li *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Salir</a></li>
                       </ul>
                     </div>
-                    
+
                     <router-outlet></router-outlet>
 
                 </div>

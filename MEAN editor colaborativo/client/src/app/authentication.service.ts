@@ -143,4 +143,12 @@ export class AuthenticationService {
     window.localStorage.removeItem('mean-token');
     this.router.navigateByUrl('/');
   }
+
+  //nuevos metodos 2.0 lets go baby
+  public registrarPad_usuarioNuevo(){
+  
+
+  }
+
+
 }

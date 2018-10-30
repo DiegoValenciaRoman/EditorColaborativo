@@ -1,0 +1,50 @@
+<p>Sesiones activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal">Crear Sesion</button></p>
+<br>
+<div class="list-group" *ngIf="filtersLoaded | async">
+  <a href="#" class="list-group-item list-group-item-action">Sesion 1<button type="button" class="btn btn-xs btn-primary pull-right">entrar</button></a>
+  <a href="#" class="list-group-item list-group-item-action">Sesion 2<button type="button" class="btn btn-xs btn-primary pull-right">entrar</button></a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="crearSesionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="filtersLoaded | async">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Creando Sesion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="sesionForm" (ngSubmit)="crearSesion()" *ngIf="filtersLoaded | async">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" placeholder="{{this.usuario.email}}" disabled>
+          </div>
+          <div class="form-group">
+            <label for="id_sesion">id_sesion</label>
+            <input type="text" class="form-control" placeholder="identificador unico" formControlName="id_sesion">
+          </div>
+          <div class="form-group">
+            <label for="nombre_sesion">nombre_sesion</label>
+            <input type="text" class="form-control" placeholder="El nombre de la sesion o clase" formControlName="nombre_sesion">
+          </div>
+          <div class="form-group">
+            <label for="privacidad">Privacidad de sesion</label>
+            <select class="form-control" formControlName="privacidad">
+              <option>Publico</option>
+              <option>Privado</option>
+            </select>
+          </div>
+          <hr>
+          <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary pull-right">Crear Sesion</button>
+        </form>
+<br><br>
+
+      </div>
+
+    </div>
+  </div>
+</div>

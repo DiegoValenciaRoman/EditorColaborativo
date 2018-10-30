@@ -21,4 +21,7 @@ router.post('/nota',ctrlAuth.notas);
 router.post('/guardarNota',ctrlAuth.guardarNota);
 router.post('/eliminarNota',ctrlAuth.eliminarNota);
 
+//sesiones
+router.post('/crearSesion',ctrlAuth.crearSesion);
+
 module.exports = router;
