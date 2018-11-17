@@ -15,7 +15,7 @@ export class SesionesComponent implements OnInit {
   nombre_sesion: new FormControl(''),
   privacidad: new FormControl('')
   });
-  usuario = {}
+  usuario:any;
   filtersLoaded: Promise<boolean>;
   constructor(private auth: AuthenticationService) { }
 
@@ -39,10 +39,14 @@ export class SesionesComponent implements OnInit {
       email:this.usuario.email,
       privacidad:this.sesionForm.value.privacidad,
       editores:[],
-      participantes:[],
+      participantes:[this.usuario._id],
       id_pad:''
     };
     console.log(sesion);
+    console.log('ahora se creara la sesion');
+    this.auth.crearSesion(sesion).subscribe((bien) => {
+      console.log(bien);
+    });
   }
 
 }

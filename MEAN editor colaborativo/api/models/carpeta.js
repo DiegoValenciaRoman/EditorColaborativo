@@ -1,5 +1,5 @@
 var mongoose = require( 'mongoose' );
-var notaSchema = new mongoose.Schema({
+var carpetaSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true

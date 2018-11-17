@@ -133,6 +133,19 @@ export class AuthenticationService {
     return request;
   }
 
+  public crearSesion(sesionInfo){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/crearSesion`, sesionInfo);
+    const request = base.pipe(
+      map((data) => {
+        console.log(data+' se realizo la peticion');
+        return data;
+      })
+    );
+    return request;
+
+  }
+
   public profile(): Observable<any> {
     return this.request('get', 'profile');
   }
@@ -146,7 +159,7 @@ export class AuthenticationService {
 
   //nuevos metodos 2.0 lets go baby
   public registrarPad_usuarioNuevo(){
-  
+
 
   }
 

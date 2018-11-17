@@ -1,8 +1,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Nota = mongoose.model('Nota');
-var Nota = mongoose.model('Sesion');
+var Sesion = mongoose.model('sesion');
 //agregando requerimientos para trabajar con la api de etherpad y crear un pad personal cada vez que se registra un usuario
 api = require('etherpad-lite-client')
 etherpad = api.connect({
@@ -51,15 +50,44 @@ module.exports.guardarNota = function(req,res) {
 //Sesiones
 module.exports.crearSesion = async function(req,res){
   var sesion = new Sesion();
-  sesion.id_sesion = req.body.id_sesion;
-  sesion.nombre_sesion = req.body.nombre_sesion;
-  sesion.email = req.body.email;
-  sesion.privacidad = req.body.privacidad;
-  sesion.participantes = [];
-  sesion.editores = [];
-  var id;
+  var User = mongoose.model('User');
+
+   User.find({email:req.body.email},(err,data)=>{
+    var data1 = JSON.stringify(data);
+    console.log(data[0].email);
+    var args = {
+      padID: req.body.id_sesion
+    };
+    etherpad.createPad(args,(error,data)=>{
+      if(error){
+        console.error('Error al crear pad: ' + error.message);
+        res.status(400);
+      }
+      else{
+        console.log('New pad created: ' + data);
+      }
+    });
+    console.log('IMPRIMIENDO REQ BODY\n\n'+req.body.id_sesion);
+    var sesion = new Sesion({
+      id_sesion: req.body.id_sesion,
+      nombre_sesion:req.body.nombre_sesion,
+      email:req.body.email,
+      privacidad: req.body.privacidad,
+      id_pad:req.body.id_sesion
+    });
+    sesion.participantes.push(data[0]._id)
+    sesion.save((err)=>{
+      if (err){
+        return handleError(err)
+      }
+      else{      res.status(200);
+            res.send(sesion);}
+    });
+
+  });
+/*  var id;
   var args = {
-    padID: req.body.id_sesion;
+    padID: req.body.id_sesion
   }
   await etherpad.createPad(args,(error,data)=>{
     if(error){
@@ -68,15 +96,18 @@ module.exports.crearSesion = async function(req,res){
     }
     else{
       console.log('New pad created: ' + data);
-      console.log(id);
     }
-  });
-  sesion.id_pad = id;
-  sesion.save(function(err){
-    console.log(sesion);
-    res.status(200);
-    res.send(sesion);
-  });
+  });*/
+/*  sesion.save(function(err){
+    if(err){
+          console.log(err);
+          return;
+     }else{
+      console.log(sesion);
+      res.status(200);
+      res.send(sesion);
+     }
+  });*/
 
 
 }
