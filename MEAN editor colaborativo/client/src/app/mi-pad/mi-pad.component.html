@@ -1,4 +1,7 @@
 <div *ngIf="this.ready" class="Pad">
+<h2>Pad Sesion</h2>
+<iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link2)" width=600 height=400></iframe>
+<h2>Pad Personal</h2>
 <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link)" width=600 height=400></iframe>
 
 </div>

@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var sesionSchema = new mongoose.Schema({
   id_sesion: {
     type: String,
-    required: true
+    required: true  ,
+    unique: true
   },
   nombre_sesion: {
     type: String

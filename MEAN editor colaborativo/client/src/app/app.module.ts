@@ -15,6 +15,7 @@ import { NotasComponent } from './profile/notas/notas.component';
 import { RamoComponent } from './ramo/ramo.component';
 import { MiPadComponent } from './mi-pad/mi-pad.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path : 'ramo', component: RamoComponent, canActivate:[AuthGuardService]},
-  { path : 'miPad', component: MiPadComponent, canActivate:[AuthGuardService]},
+  { path : 'miPad/:id', component: MiPadComponent, canActivate:[AuthGuardService]},
   { path : 'sesiones', component: SesionesComponent, canActivate:[AuthGuardService]}
 ];
 
@@ -44,6 +45,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     AuthenticationService,

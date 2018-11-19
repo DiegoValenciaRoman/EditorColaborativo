@@ -157,10 +157,31 @@ export class AuthenticationService {
     this.router.navigateByUrl('/');
   }
 
-  //nuevos metodos 2.0 lets go baby
-  public registrarPad_usuarioNuevo(){
+  public sesionOwnerOrPart(email,id){
+    let base;
+    var userinfo = {id:id,email:email};
+    base = this.http.post(`http://localhost:3000/api/sesionOwnerOrPart`, userinfo);
+    const request = base.pipe(
+      map((data) => {
+        console.log(data+' se realizo la peticion');
+        return data;
+      })
+    );
+    return request;
 
+  }
 
+  public obtenerSesiones(){
+    console.log('se llama al a funcion');
+    let base;
+    base = this.http.post(`http://localhost:3000/api/obtenerSesiones`, {});
+    const request = base.pipe(
+      map((data) => {
+        console.log('se pidieron las sesiones y se devolvio' + data);
+        return data;
+      })
+    );
+    return request;
   }
 
 

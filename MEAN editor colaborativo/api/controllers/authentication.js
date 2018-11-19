@@ -48,6 +48,31 @@ module.exports.guardarNota = function(req,res) {
 }
 
 //Sesiones
+
+module.exports.obtenerSesiones = function(req,res) {
+  console.log('se realiza peticion en el serivdor');
+  Sesion.find({},(err,docs)=>{
+    res.status(200);
+    res.send(docs);
+  })
+}
+
+module.exports.sesionOwnerOrPart = function(req,res){
+  console.log(req.body);
+  Sesion.find({email:req.body.email},(err,docs)=>{
+    if(docs.length == 0){
+      Sesion.find({participantes:req.body.id},(err,docs)=>{
+        res.status(200);
+        res.send(docs);
+      });
+    }else if(docs.length == 1){
+      res.status(200);
+      res.send(docs);
+    }
+    console.log(docs.length);
+  })
+}
+
 module.exports.crearSesion = async function(req,res){
   var sesion = new Sesion();
   var User = mongoose.model('User');
@@ -78,37 +103,18 @@ module.exports.crearSesion = async function(req,res){
     sesion.participantes.push(data[0]._id)
     sesion.save((err)=>{
       if (err){
-        return handleError(err)
+        res.status(200);
+        var respuesta = {head:err,mssg:err};
+        res.send(respuesta);
       }
-      else{      res.status(200);
-            res.send(sesion);}
+      else{
+        res.status(200);
+        var respuesta = {head:sesion,mssg:'bien'};
+        res.send(respuesta);
+      }
     });
 
   });
-/*  var id;
-  var args = {
-    padID: req.body.id_sesion
-  }
-  await etherpad.createPad(args,(error,data)=>{
-    if(error){
-      console.error('Error al crear pad: ' + error.message);
-      res.status(400);
-    }
-    else{
-      console.log('New pad created: ' + data);
-    }
-  });*/
-/*  sesion.save(function(err){
-    if(err){
-          console.log(err);
-          return;
-     }else{
-      console.log(sesion);
-      res.status(200);
-      res.send(sesion);
-     }
-  });*/
-
 
 }
 

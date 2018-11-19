@@ -23,5 +23,7 @@ router.post('/eliminarNota',ctrlAuth.eliminarNota);
 
 //sesiones
 router.post('/crearSesion',ctrlAuth.crearSesion);
+router.post('/obtenerSesiones',ctrlAuth.obtenerSesiones);
+router.post('/sesionOwnerOrPart',ctrlAuth.sesionOwnerOrPart);
 
 module.exports = router;

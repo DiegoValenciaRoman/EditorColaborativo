@@ -1,12 +1,21 @@
-<p>Sesiones activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal">Crear Sesion</button></p>
-<br>
-<div class="list-group" *ngIf="filtersLoaded | async">
-  <a href="#" class="list-group-item list-group-item-action">Sesion 1<button type="button" class="btn btn-xs btn-primary pull-right">entrar</button></a>
-  <a href="#" class="list-group-item list-group-item-action">Sesion 2<button type="button" class="btn btn-xs btn-primary pull-right">entrar</button></a>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<div *ngIf="!canAccessSesion">
+  <p>Tu sesion activa</p><br>
+  <div class="list-group" *ngIf="filtersLoaded | async">
+    <a *ngFor="let sesion of tuSesion" [routerLink]="['/miPad', sesion.id_sesion]" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" (click)="entrarSesion('false',sesion)">entrar</button></a>
+  </div>
 </div>
 
+<hr>
+<p>Sesiones activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal" (click)="modalToggle()">Crear Sesion</button></p>
+<br>
+<div class="list-group" *ngIf="filtersLoaded | async">
+  <a *ngFor="let sesion of sesiones" href="#" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" [disabled]="!canAccessSesion">entrar</button></a>
+</div>
+
+
 <!-- Modal -->
-<div class="modal fade" id="crearSesionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="filtersLoaded | async">
+<div class="modal" id="crearSesionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="filtersLoaded | async">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -15,7 +24,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="!body1">
+        {{this.resultado}}
+      </div>
+      <div class="modal-body" *ngIf="body1">
 
         <form [formGroup]="sesionForm" (ngSubmit)="crearSesion()" *ngIf="filtersLoaded | async">
           <div class="form-group">
@@ -39,7 +51,7 @@
           </div>
           <hr>
           <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary pull-right">Crear Sesion</button>
+          <button type="submit" class="btn btn-primary pull-right" >Crear Sesion</button>
         </form>
 <br><br>
 
