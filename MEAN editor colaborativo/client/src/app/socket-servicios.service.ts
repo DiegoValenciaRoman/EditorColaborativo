@@ -11,4 +11,8 @@ export class SocketServiciosService {
     this.socket = io(this.url);
    }
 
+   public sendMessage(message) {
+    this.socket.emit('new-message', message);
+  }
+
 }

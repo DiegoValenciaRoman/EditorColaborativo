@@ -6,7 +6,7 @@ import { SocketServiciosService } from '../socket-servicios.service';
 })
 export class ProfileComponent {
   details: UserDetails;
-
+  message:string;
   constructor(private auth: AuthenticationService, private socketService: SocketServiciosService) {}
 
   ngOnInit() {
@@ -17,4 +17,10 @@ export class ProfileComponent {
       console.error(err);
     });
   }
+
+  sendMessage() {
+  this.socketService.sendMessage(this.message);
+  this.message = '';
+  }
+
 }
