@@ -10,7 +10,7 @@
 <p>Sesiones activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal" (click)="modalToggle()">Crear Sesion</button></p>
 <br>
 <div class="list-group" *ngIf="filtersLoaded | async">
-  <a *ngFor="let sesion of sesiones" href="#" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" [disabled]="!canAccessSesion">entrar</button></a>
+  <a *ngFor="let sesion of sesiones" (click)="entrarSesion(sesion)" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" [disabled]="!canAccessSesion">entrar</button></a>
 </div>
 
 

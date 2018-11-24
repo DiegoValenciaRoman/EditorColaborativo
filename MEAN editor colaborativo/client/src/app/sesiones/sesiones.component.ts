@@ -49,6 +49,19 @@ export class SesionesComponent implements OnInit {
 
   }
 
+  sesionOwnerOrPart(){
+    this.auth.sesionOwnerOrPart(this.usuario.email,this.usuario._id).subscribe(response=>{
+      console.log(response);
+      if(response.length == 0){
+        console.log(' no participate ni en mierda');
+        this.canAccessSesion = true;
+      }else{
+        this.tuSesion = response;
+        this.canAccessSesion = false;
+      }
+    });
+  }
+
   obtenerSesiones(){
     this.auth.obtenerSesiones().subscribe(sesiones=>{
       console.log(sesiones);
@@ -61,8 +74,13 @@ export class SesionesComponent implements OnInit {
     this.resultado='';
   }
 
-  entrarSesion(primeravez,sesion){
-    console.log(primeravez,sesion);
+  entrarSesion(sesion){
+    console.log(this.usuario._id);
+    this.auth.agregarUsuarioSesion(sesion._id,this.usuario._id).subscribe(()=>{
+      console.log("se agrego la persona");
+      this.router.navigate(['/miPad', sesion.id_sesion]);
+    });
+
   }
 
   crearSesion(){
@@ -82,6 +100,7 @@ export class SesionesComponent implements OnInit {
       this.resultado = JSON.stringify(bien);
       this.body1 = false;
       this.obtenerSesiones();
+      this.sesionOwnerOrPart();
       //this.router.navigateByUrl('/miPad');
     });
   }

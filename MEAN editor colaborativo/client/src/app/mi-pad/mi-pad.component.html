@@ -1,7 +1,21 @@
-<div *ngIf="this.ready" class="Pad">
-<h2>Pad Sesion</h2>
-<iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link2)" width=600 height=400></iframe>
-<h2>Pad Personal</h2>
-<iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link)" width=600 height=400></iframe>
-
+<div class="row">
+  <div class="col-sm-6">
+    <div *ngIf="this.ready" class="Pad">
+      <h2>Pad Sesion</h2>
+      <button *ngIf="this.salirReady" (click)="salirSesion()"type="button" class="btn btn-danger btn-xs">Salir de sesion</button>
+      <iframe  name="embed_readonly"  [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link2)" width=600 height=400></iframe>
+<!-- style="pointer-events: none;"-->
+      <h2>Pad Personal</h2>
+      <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link)" width=600 height=400></iframe>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <h3>Participantes del pad</h3>
+      <ul *ngFor="let participante of participantes" class="list-group">
+        <li class="list-group-item">{{participante.name}}
+          <button *ngIf="owner" type="button" class="btn btn-success btn-xs pull-right">Dar permiso</button>
+          <button *ngIf="owner" type="button" class="btn btn-danger btn-xs pull-right">Quitar permiso</button>
+        </li>
+      </ul>
+  </div>
 </div>

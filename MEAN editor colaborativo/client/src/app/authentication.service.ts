@@ -157,6 +157,19 @@ export class AuthenticationService {
     this.router.navigateByUrl('/');
   }
 
+  public agregarUsuarioSesion(id_sesion,id_usuario){
+    let base;
+    var objeto = {id_sesion:id_sesion,id_usuario:id_usuario};
+    base = this.http.post(`http://localhost:3000/api/entrarSesion`, objeto);
+    const request = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return request;
+
+  }
+
   public sesionOwnerOrPart(email,id){
     let base;
     var userinfo = {id:id,email:email};
@@ -169,6 +182,45 @@ export class AuthenticationService {
     );
     return request;
 
+  }
+
+
+  public obtenerSesion(id){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/obtenerSesion`, {id_sesion:id});
+    const request = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return request;
+  }
+
+  public eliminarDeSesion(id_user,id_sesion){
+    var objeto = {
+      id_user : id_user,
+      id_sesion : id_sesion
+    }
+    let base;
+    base = this.http.post(`http://localhost:3000/api/eliminarDeSesion`, objeto);
+    const request = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return request;
+
+  }
+
+  public eliminarSesion(id){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/eliminarSesion`, {id_sesion:id});
+    const request = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return request;
   }
 
   public obtenerSesiones(){

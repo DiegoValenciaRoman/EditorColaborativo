@@ -49,12 +49,59 @@ module.exports.guardarNota = function(req,res) {
 
 //Sesiones
 
+module.exports.entrarSesion = function(req,res) {
+  Sesion.update({ _id: req.body.id_sesion }, { $push: { participantes: req.body.id_usuario } },(err,response)=>{
+    console.log(response);
+    res.status(200);
+    res.send(response);
+  });
+}
+
+module.exports.obtenerSesion = function(req,res) {
+  console.log('se realiza peticion en el serivdor');
+  Sesion.
+  findOne({ id_sesion: req.body.id_sesion }).
+  populate('participantes').
+  exec(function (err, sesion) {
+    if (err) return handleError(err);
+    console.log(sesion);
+    res.status(200);
+    res.send(sesion)
+  });
+
+  /*Sesion.find({id_sesion:req.body.id_sesion},(err,docs)=>{
+    res.status(200);
+    res.send(docs);
+  })*/
+}
+
+module.exports.eliminarDeSesion = function(req,res) {
+  Sesion.update({_id:req.body.id_sesion},{ $pullAll: { participantes: [req.body.id_user] } },(err,response)=>{
+    console.log(response);
+    res.status(200);
+    res.send(response);
+  });
+}
+
 module.exports.obtenerSesiones = function(req,res) {
   console.log('se realiza peticion en el serivdor');
   Sesion.find({},(err,docs)=>{
     res.status(200);
     res.send(docs);
   })
+}
+
+module.exports.eliminarSesion = function(req,res) {
+  console.log(req.body.id_sesion);
+  Sesion.deleteOne({ _id: req.body.id_sesion }, function (err,doc) {
+  if (err){
+    return handleError(err)
+  }else{
+    res.status(200);
+    res.send(doc);
+  }
+
+});
 }
 
 module.exports.sesionOwnerOrPart = function(req,res){

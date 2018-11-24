@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './authentication.service';
+import { SocketServiciosService } from './socket-servicios.service';
 import { AuthGuardService } from './auth-guard.service';
 import { NotasComponent } from './profile/notas/notas.component';
 import { RamoComponent } from './ramo/ramo.component';
@@ -49,7 +50,8 @@ const routes: Routes = [
   ],
   providers: [
     AuthenticationService,
-    AuthGuardService
+    AuthGuardService,
+    SocketServiciosService
   ],
   bootstrap: [AppComponent]
 })
