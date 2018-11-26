@@ -17,6 +17,7 @@ import { RamoComponent } from './ramo/ramo.component';
 import { MiPadComponent } from './mi-pad/mi-pad.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ListaComponent } from './mi-pad/lista/lista.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,7 +39,8 @@ const routes: Routes = [
     NotasComponent,
     RamoComponent,
     MiPadComponent,
-    SesionesComponent
+    SesionesComponent,
+    ListaComponent
   ],
   imports: [
     BrowserModule,

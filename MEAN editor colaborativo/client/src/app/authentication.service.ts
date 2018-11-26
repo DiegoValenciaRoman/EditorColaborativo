@@ -30,6 +30,7 @@ export interface email {
 export class AuthenticationService {
   private token: string;
   email:string;
+  user:any;
   constructor(private http: HttpClient, private router: Router) {}
 
   private saveToken(token: string): void {
@@ -98,6 +99,18 @@ export class AuthenticationService {
     let base;
     console.log(nota);
     base = this.http.post(`http://localhost:3000/api/guardarNota`, nota);
+    const request = base.pipe(
+      map((data) => {
+        console.log(data);
+        return data;
+      })
+    );
+    return request;
+  }
+
+  public getReadOnlyID(pad_id){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/getReadOnlyID`, {pad_id:pad_id});
     const request = base.pipe(
       map((data) => {
         console.log(data);
@@ -222,6 +235,18 @@ export class AuthenticationService {
     );
     return request;
   }
+
+  public modificarPermiso(modalidad,id_sesion,id_usuario,nombre_sesion){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/modificarPermiso`, {modalidad:modalidad,id_sesion:id_sesion,id_usuario:id_usuario,nombre_sesion:nombre_sesion});
+    const request = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return request;
+  }
+
 
   public obtenerSesiones(){
     console.log('se llama al a funcion');

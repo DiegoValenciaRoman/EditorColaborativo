@@ -7,20 +7,24 @@ import { SocketServiciosService } from '../socket-servicios.service';
 export class ProfileComponent {
   details: UserDetails;
   message:string;
-  constructor(private auth: AuthenticationService, private socketService: SocketServiciosService) {}
+  messages: string[] = [];
+  constructor(private auth: AuthenticationService/*,private socketService: SocketServiciosService*/) {}
 
   ngOnInit() {
     this.auth.profile().subscribe(user => {
       this.details = user;
       this.auth.email = this.details.email;
+      this.auth.user = user;
     }, (err) => {
       console.error(err);
     });
+
+  /*  this.socketService
+      .getMessages()
+      .subscribe((message: string) => {
+        this.messages.push(message);
+      });*/
   }
 
-  sendMessage() {
-  this.socketService.sendMessage(this.message);
-  this.message = '';
-  }
 
 }

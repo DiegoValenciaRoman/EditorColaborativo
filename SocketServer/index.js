@@ -9,10 +9,21 @@ let io = socketIO(server);
 
 const port = process.env.PORT || 3001;
 
+io.set('heartbeat interval', 900000);
+
 io.on('connection', (socket) => {
-    console.log('user connected');
+  console.log('usuario conectado');
+
+    socket.on('sala',(room)=>{
+        socket.join(room);
+
+        console.log('usuario entro a la sala' + room);
+    });
+
+
     socket.on('new-message', (message) => {
       console.log(message);
+      io.emit('new-message', message);
     });
 });
 

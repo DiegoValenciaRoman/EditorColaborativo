@@ -29,5 +29,7 @@ router.post('/obtenerSesion',ctrlAuth.obtenerSesion);
 router.post('/eliminarDeSesion',ctrlAuth.eliminarDeSesion);
 router.post('/eliminarSesion',ctrlAuth.eliminarSesion);
 router.post('/entrarSesion',ctrlAuth.entrarSesion);
+router.post('/modificarPermiso',ctrlAuth.modificarPermiso);
+router.post('/getReadOnlyID',ctrlAuth.getReadOnlyID);
 
 module.exports = router;

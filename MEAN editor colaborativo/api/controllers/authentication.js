@@ -49,19 +49,58 @@ module.exports.guardarNota = function(req,res) {
 
 //Sesiones
 
+module.exports.getReadOnlyID = function(req,res) {
+  etherpad.getReadOnlyID({padID:req.body.pad_id},(error,data)=>{
+    console.log(data);
+    res.status(200);
+    res.send(data);
+  });
+}
+
 module.exports.entrarSesion = function(req,res) {
-  Sesion.update({ _id: req.body.id_sesion }, { $push: { participantes: req.body.id_usuario } },(err,response)=>{
+  Sesion.update({ id_sesion: req.body.id_sesion }, { $push: { participantes: req.body.id_usuario } },(err,response)=>{
+    if(err){
+      console.log('ERROR AL ENTRAR Sesion')
+      res.status(400);
+    }
     console.log(response);
     res.status(200);
     res.send(response);
   });
 }
 
+module.exports.modificarPermiso = function(req,res) {
+  console.log(req.body.modalidad + ' '+ req.body.id_sesion +' '+req.body.id_usuario);
+  if(req.body.modalidad){
+    Sesion.update({ _id: req.body.id_sesion }, { $push: { editores: req.body.id_usuario } },(err,response)=>{
+      console.log(response);
+      etherpad.getReadOnlyID({padID:req.body.nombre_sesion},(error,data)=>{
+        console.log(data);
+        res.status(200);
+        res.send(data);
+      });
+    });
+    console.log('verdad');
+  }
+  else{
+    Sesion.update({_id:req.body.id_sesion},{ $pullAll: { editores: [req.body.id_usuario] } },(err,response)=>{
+      console.log(response);
+      etherpad.getReadOnlyID({padID:req.body.nombre_sesion},(error,data)=>{
+        console.log(data);
+        res.status(200);
+        res.send(data);
+      });
+    });
+    console.log('mentira');
+  }
+
+}
+
 module.exports.obtenerSesion = function(req,res) {
   console.log('se realiza peticion en el serivdor');
   Sesion.
   findOne({ id_sesion: req.body.id_sesion }).
-  populate('participantes').
+  populate('participantes').populate('editores').
   exec(function (err, sesion) {
     if (err) return handleError(err);
     console.log(sesion);

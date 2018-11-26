@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { FormGroup, FormControl,ReactiveFormsModule} from '@angular/forms';
 import { AuthenticationService, UserDetails } from '../authentication.service';
+import { SocketServiciosService } from '../socket-servicios.service'
 import { ActivatedRoute } from '@angular/router';
 import { Router} from '@angular/router';
 import * as $ from 'jquery';
@@ -25,7 +26,10 @@ export class SesionesComponent implements OnInit {
   canAccessSesion = false;
   sesiones = [];
   tuSesion = [];
-  constructor(private auth: AuthenticationService,private route: ActivatedRoute, private router: Router ) { }
+  sesionesPublicas = [];
+  sesionesPrivadas =[];
+  constructor(private auth: AuthenticationService,private route: ActivatedRoute, private router: Router,
+  private socketService: SocketServiciosService ) { }
 
   ngOnInit() {
     this.auth.profile().subscribe(user=>{
@@ -39,6 +43,7 @@ export class SesionesComponent implements OnInit {
           this.canAccessSesion = true;
         }else{
           this.tuSesion = response;
+          console.log(this.tuSesion);
           this.canAccessSesion = false;
         }
       });
@@ -64,8 +69,15 @@ export class SesionesComponent implements OnInit {
 
   obtenerSesiones(){
     this.auth.obtenerSesiones().subscribe(sesiones=>{
-      console.log(sesiones);
       this.sesiones = sesiones;
+      for(var i = 0;i<this.sesiones.length;i++){
+        if(this.sesiones[i].privacidad=='Publico'){
+          this.sesionesPublicas.push(this.sesiones[i]);
+        }else{
+          this.sesionesPrivadas.push(this.sesiones[i]);
+        }
+      }
+      console.log(this.sesionesPrivadas);
     });
   }
 
@@ -75,12 +87,17 @@ export class SesionesComponent implements OnInit {
   }
 
   entrarSesion(sesion){
-    console.log(this.usuario._id);
-    this.auth.agregarUsuarioSesion(sesion._id,this.usuario._id).subscribe(()=>{
+    this.auth.agregarUsuarioSesion(sesion,this.usuario._id).subscribe(()=>{
       console.log("se agrego la persona");
-      this.router.navigate(['/miPad', sesion.id_sesion]);
+      console.log(sesion);
+      this.sendMessage(sesion);
+      this.router.navigate(['/miPad', sesion]);
     });
 
+  }
+
+  sendMessage(id) {
+    this.socketService.sendMessage(id);
   }
 
   crearSesion(){

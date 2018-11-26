@@ -7,10 +7,20 @@
 </div>
 
 <hr>
-<p>Sesiones activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal" (click)="modalToggle()">Crear Sesion</button></p>
+<p>Entrar a una sesion privada ({{this.entrarPrivada}})</p>
+<div class="col-sm-3">
+    <input [(ngModel)]="this.entrarPrivada" type="text" class="form-control" placeholder="ID Sesion privada">
+</div>
+<div class="col-sm-9">
+  <button type="button" name="button" [disabled]="!canAccessSesion" (click)="entrarSesion(this.entrarPrivada)"class="btn btn-primary pull-right">Entrar sesion privada</button>
+</div>
+
+<br><br>
+<hr>
+<p>Sesiones publicas activas disponibles<button *ngIf="filtersLoaded | async" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crearSesionModal" (click)="modalToggle()">Crear Sesion</button></p>
 <br>
 <div class="list-group" *ngIf="filtersLoaded | async">
-  <a *ngFor="let sesion of sesiones" (click)="entrarSesion(sesion)" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" [disabled]="!canAccessSesion">entrar</button></a>
+  <a *ngFor="let sesion of sesionesPublicas" (click)="entrarSesion(sesion.id_sesion)" class="list-group-item list-group-item-action">{{sesion.nombre_sesion}}<button type="button" class="btn btn-xs btn-primary pull-right" [disabled]="!canAccessSesion">entrar</button></a>
 </div>
 
 
