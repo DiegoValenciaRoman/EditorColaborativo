@@ -18,6 +18,8 @@ import { MiPadComponent } from './mi-pad/mi-pad.component';
 import { SesionesComponent } from './sesiones/sesiones.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ListaComponent } from './mi-pad/lista/lista.component';
+import { CarpetaComponent } from './carpeta/carpeta.component';
+import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +28,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path : 'ramo', component: RamoComponent, canActivate:[AuthGuardService]},
   { path : 'miPad/:id', component: MiPadComponent, canActivate:[AuthGuardService]},
-  { path : 'sesiones', component: SesionesComponent, canActivate:[AuthGuardService]}
+  { path : 'sesiones', component: SesionesComponent, canActivate:[AuthGuardService]},
+  { path : 'carpeta', component: CarpetaComponent, canActivate:[AuthGuardService]},
+  { path : 'adminUsuario', component: AdminUsuariosComponent, canActivate:[AuthGuardService]}
 ];
 
 @NgModule({
@@ -40,7 +44,9 @@ const routes: Routes = [
     RamoComponent,
     MiPadComponent,
     SesionesComponent,
-    ListaComponent
+    ListaComponent,
+    CarpetaComponent,
+    AdminUsuariosComponent
   ],
   imports: [
     BrowserModule,

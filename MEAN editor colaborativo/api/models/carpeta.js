@@ -1,4 +1,6 @@
 var mongoose = require( 'mongoose' );
+var User = mongoose.model('User');
+var Schema = mongoose.Schema;
 var carpetaSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -8,12 +10,10 @@ var carpetaSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  archivos: {
-    type: []
-  },
-  participantes: {
-    type: []
-  }
+  archivos:
+  [{Nombre:String,data:Buffer,modificacion:String}],
+  participantes:
+    [{type:String}]
 });
 
-mongoose.model('Nota', notaSchema);
+mongoose.model('carpeta', carpetaSchema);

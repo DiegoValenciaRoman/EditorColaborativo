@@ -2,6 +2,7 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Sesion = mongoose.model('sesion');
+var Carpeta = mongoose.model('carpeta');
 //agregando requerimientos para trabajar con la api de etherpad y crear un pad personal cada vez que se registra un usuario
 api = require('etherpad-lite-client')
 etherpad = api.connect({
@@ -46,6 +47,73 @@ module.exports.guardarNota = function(req,res) {
   });
 
 }
+//CarpetasArchivos
+
+module.exports.guardarArchivo = function(req,res) {
+  var infoarchivo = {Nombre:req.body.nombre_archivo,data:req.body.file,modificacion:req.body.modificacion}
+  console.log(infoarchivo);
+  console.log(req.body.email);
+  Carpeta.update({email: req.body.email},
+                 { $push: { archivos: infoarchivo } } ,
+                 (err,response)=>{
+    if (err) {
+      console.log(err);
+    }else{
+      console.log(response);
+      res.status(200);
+      res.send(response);
+    }
+  });
+}
+
+module.exports.obtenerCarpeta = function(req,res) {
+  var respu = [];
+  var aux =[];
+/*  Carpeta.find({participantes:req.body.email },(err,doc)=>{
+    console.log('consulta0');
+    console.log(doc);
+
+  });*/
+  Carpeta.find({ email: req.body.email },(err,response)=>{
+    if (err) {
+      console.log(err);
+    }else{
+      console.log('primera consulta');
+      console.log(response)
+      aux = aux.concat(response);
+      Carpeta.find({participantes:req.body.email },(err1,doc)=>{
+        if (err1) {
+          console.log(err1);
+        }else{
+          console.log('segunda consulta');
+          console.log(doc);
+          aux = aux.concat(doc);
+          res.status(200);
+          res.send(aux);
+        }
+      });
+      console.log('sender final');
+      console.log(aux);
+      /*res.status(200);
+      res.send(aux);*/
+    }
+  });
+}
+
+module.exports.darPermisoCarpeta = function(req,res){
+  var infoParticipante = {email:req.body.email_permiso};
+  Carpeta.update({ email: req.body.email_owner }, { $push: { participantes: req.body.email_permiso } },(err,response)=>{
+    if(err){
+      console.log(err);
+      res.status(400);
+    }else{
+      console.log(response);
+      res.status(200);
+      res.send(response);
+    }
+  });
+}
+
 
 //Sesiones
 
@@ -214,6 +282,7 @@ module.exports.register = async function(req, res) {
   // }
 
   var user = new User();
+  var carpeta = new Carpeta();
   var id;
   var args = {
     padID: req.body.email
@@ -235,6 +304,8 @@ module.exports.register = async function(req, res) {
   console.log(user.pad_usuario+' pad usuario');
   user.name = req.body.name;
   user.email = req.body.email;
+  carpeta.email = req.body.email;
+  carpeta.nombre_carpeta = 'nube';
   //perimos 0 solo permite entrar a sesiones
   //permiso 1 permite al usuario crear sesiones, mas lo del permiso 0
   //permiso 2 permite al usuario tener una carpeta y guardar archivos, mas lo de permiso 0
@@ -242,7 +313,7 @@ module.exports.register = async function(req, res) {
   user.permiso_usuario = 0;
 
   user.setPassword(req.body.password);
-
+  carpeta.save();
   user.save(function(err){
     var token;
     token = user.generateJwt();

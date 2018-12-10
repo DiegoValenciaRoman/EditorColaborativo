@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-md-6">
+    <h1>Subir archivos a tu carpeta</h1>
+    <br>
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="guardarArchivo()">
+      <input type="file" (change)="onFileChange($event)" />
+      <button type="submit" [disabled]="formGroup.invalid || formGroup.pristine">Submit</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h1>Permisos en tu carpeta</h1>
+    <br>
+      <input [(ngModel)]="busqueda"/>
+      <button type="submit"  (click)="buscar()">Submit</button>
+      <br>
+  </div>
+</div>
+
+<br><br>
+
+<!--<h1>{{this.url}}</h1>
+<a [href]="this.sanitizer.bypassSecurityTrustResourceUrl(this.url)" target="_blank"  [download]="this.filename">bajar</a>-->
+<hr>
+<br><br>
+    <h1>Archivos guardados en tu nube</h1>
+<div class="carpetas">
+  <div class="container">
+  <div class="row">
+      <div class="col-md-3">
+          <div class="ibox float-e-margins">
+              <div class="ibox-content">
+                  <div class="file-manager">
+                      <div class="hr-line-dashed"></div>
+                      <!--<button class="btn btn-primary btn-block">Upload Files</button>-->
+                      <div class="hr-line-dashed"></div>
+                      <h5>Tus carpetas</h5>
+                      <ul class="folder-list" style="padding: 0">
+                          <li *ngFor="let carpeta of this.array_carpetas;let i = index"><a class='btn' (click)="mostrarArchivos(i)"><i  class="fa fa-folder"></i> {{carpeta.email}}</a></li>
+                      </ul>
+                      <div class="clearfix"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-9 animated fadeInRight">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div *ngFor="let archivo of this.array_archivos" class="file-box">
+                      <div  class="file">
+                          <a data-toggle="modal" data-target="#crearSesionModal" (click)="mostrarArchivo(archivo)">
+                              <span class="corner"></span>
+
+                              <div class="icon">
+                                  <i class="fa fa-file"></i>
+                                  <img alt="image" class="img-responsive" src="http://www.iconninja.com/files/197/439/801/paper-document-page-file-icon.png">
+                              </div>
+                              <div class="file-name">
+                                  {{archivo.Nombre}}
+                                  <br>
+                                  <small>modificado: {{archivo.modificacion}}</small>
+                              </div>
+                          </a>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+
+<div class="modal" id="crearSesionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="filtersLoaded | async">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="this.listo" class="modal-title" id="exampleModalLabel">{{this.actual.Nombre}}</h5>
+        <div class="modal-body" *ngIf="this.listo" modal1>
+            <pre>{{this.modalText}}</pre>
+            <a [href]="this.sanitizer.bypassSecurityTrustResourceUrl(this.url)" target="_blank"  [download]="this.actual.Nombre">bajar</a>
+
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+</div>

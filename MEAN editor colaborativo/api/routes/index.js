@@ -32,4 +32,9 @@ router.post('/entrarSesion',ctrlAuth.entrarSesion);
 router.post('/modificarPermiso',ctrlAuth.modificarPermiso);
 router.post('/getReadOnlyID',ctrlAuth.getReadOnlyID);
 
+//Carpeta de archivos
+router.post('/guardarArchivo',ctrlAuth.guardarArchivo);
+router.post('/obtenerCarpeta',ctrlAuth.obtenerCarpeta);
+router.post('/darPermisoCarpeta',ctrlAuth.darPermisoCarpeta);
+
 module.exports = router;

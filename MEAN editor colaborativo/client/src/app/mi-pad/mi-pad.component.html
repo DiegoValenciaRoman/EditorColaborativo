@@ -9,18 +9,40 @@
       <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(this.link)" width=600 height=400></iframe>
     </div>
   </div>
+
   <div class="col-sm-5">
-    <h3>Participantes del pad</h3>
-      <ul *ngFor="let participante of participantes" class="list-group">
-        <li *ngIf="lista" class="list-group-item">{{participante.name}}
-          <button *ngIf="owner" (click)="modificarPermiso(true,this.sesionInfo._id,participante._id)" type="button" class="btn btn-success btn-xs pull-right">Dar permiso</button>
-        </li>
-      </ul>
-      <h3>Editores del pad</h3>
-      <ul *ngFor="let editor of editores" class="list-group">
-        <li *ngIf="lista" class="list-group-item">{{editor.name}}
-          <button *ngIf="owner" (click)="modificarPermiso(false,this.sesionInfo._id,editor._id)" type="button" class="btn btn-danger btn-xs pull-right">Quitar permiso</button>
-        </li>
-      </ul>
+    <div class="row">
+      <h3>Participantes del pad</h3>
+        <ul *ngFor="let participante of participantes" class="list-group">
+          <li *ngIf="lista" class="list-group-item">{{participante.name}}
+            <button *ngIf="owner" (click)="modificarPermiso(true,this.sesionInfo._id,participante._id)" type="button" class="btn btn-success btn-xs pull-right">Dar permiso</button>
+          </li>
+        </ul>
+        <h3>Editores del pad</h3>
+        <ul *ngFor="let editor of editores" class="list-group">
+          <li *ngIf="lista" class="list-group-item">{{editor.name}}
+            <button *ngIf="owner" (click)="modificarPermiso(false,this.sesionInfo._id,editor._id)" type="button" class="btn btn-danger btn-xs pull-right">Quitar permiso</button>
+          </li>
+        </ul>
+    </div>
+    <div class="row">
+      <h3>Cargar archivo a pad</h3>
+
+      <div class='panel noselect'>
+      	<div class='admin-panel'>
+      		<label class='text' for='toggle'>Elegir archivo</label>
+      		<label class='fas fa-cog' for='toggle'></label>
+      	</div>
+
+      	<input type='checkbox' id='toggle'>
+
+      	<div class='menu-panel'>
+      		<div class='arrow'></div>
+      		<a href='#' class='row'>
+      			<div class='column-left'>Edit Users</div>
+      			<div class='column-right'><i class='fas fa-user'></i></div>
+      		</a>
+      </div>
+    </div>
   </div>
 </div>

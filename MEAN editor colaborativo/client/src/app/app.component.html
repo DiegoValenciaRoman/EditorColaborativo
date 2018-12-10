@@ -47,9 +47,9 @@
                         </li>
 
                         <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn()">
-                            <a routerLink="/miPad">
+                            <a routerLink="/carpeta">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>miPad</span>
+                                <span>mi Carpeta</span>
                             </a>
                         </li>
 
@@ -57,6 +57,13 @@
                             <a routerLink="/sesiones">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>sesiones</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-dropdown" *ngIf="auth.isLoggedIn() && auth.getUserDetails().permiso_usuario == 4">
+                            <a routerLink="/adminUsuario">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Administrar Usuarios</span>
                             </a>
                         </li>
 

@@ -7,5 +7,7 @@ import { AuthenticationService } from './authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public auth: AuthenticationService) {}
+  constructor(public auth: AuthenticationService) {
+    console.log(this.auth.getUserDetails().permiso_usuario);
+  }
 }

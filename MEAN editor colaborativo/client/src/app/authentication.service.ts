@@ -11,6 +11,7 @@ export interface UserDetails {
   name: string;
   exp: number;
   iat: number;
+  permiso_usuario:number;
 }
 
 interface TokenResponse {
@@ -145,6 +146,49 @@ export class AuthenticationService {
     );
     return request;
   }
+
+  //archivos
+
+  public guardarArchivo(infoArchivo){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/guardarArchivo`, infoArchivo);
+    const request = base.pipe(
+      map((data) => {
+        console.log(data+' se realizo la peticion');
+        return data;
+      })
+    );
+    return request;
+
+  }
+  public darPermisoCarpeta(infousuario){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/darPermisoCarpeta`, infousuario);
+    const request = base.pipe(
+      map((data) => {
+        console.log(data+' se realizo la peticion');
+        return data;
+      })
+    );
+    return request;
+
+  }
+
+  public obtenerCarpeta(email){
+    let base;
+    base = this.http.post(`http://localhost:3000/api/obtenerCarpeta`, {email:email});
+    const request = base.pipe(
+      map((data) => {
+        console.log(data+' se realizo la peticion');
+        return data;
+      })
+    );
+    return request;
+
+  }
+
+
+  //sesiones
 
   public crearSesion(sesionInfo){
     let base;

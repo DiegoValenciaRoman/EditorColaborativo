@@ -28,6 +28,7 @@ export class SesionesComponent implements OnInit {
   tuSesion = [];
   sesionesPublicas = [];
   sesionesPrivadas =[];
+  entrarPrivada = '';
   constructor(private auth: AuthenticationService,private route: ActivatedRoute, private router: Router,
   private socketService: SocketServiciosService ) { }
 

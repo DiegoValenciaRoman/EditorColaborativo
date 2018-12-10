@@ -25,6 +25,7 @@ export class MiPadComponent implements OnInit {
   sesionInfo:any;
   message:any;
   readOnly:any;
+  array_archivos;
   constructor(private route: ActivatedRoute,private auth: AuthenticationService,public sanitizer: DomSanitizer,private router: Router
   ,private socketService: SocketServiciosService) { }
 

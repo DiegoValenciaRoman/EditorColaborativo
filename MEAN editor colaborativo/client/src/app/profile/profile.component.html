@@ -14,13 +14,11 @@
           <label class="col-sm-3 control-label">Email</label>
           <p class="form-control-static">{{ details?.email }}</p>
         </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">permiso usuario</label>
+          <p class="form-control-static">{{ details?.permiso_usuario }}</p>
+        </div>
       </div>
-      <div *ngFor="let message of messages">
-          {{message}}
-      </div>
-
-      <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()" />
-      <button (click)="sendMessage()">Send</button>
       <hr>
 
     </div>
