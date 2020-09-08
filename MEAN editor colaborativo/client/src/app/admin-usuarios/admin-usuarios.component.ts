@@ -10,6 +10,7 @@ export class AdminUsuariosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('prueba');
   }
 
 }
